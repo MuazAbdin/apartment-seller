@@ -1,49 +1,129 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Selouse</title>
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-        crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+      integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
+    <script
+      src="https://kit.fontawesome.com/7e3efebb4d.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"
+      defer
+    ></script>
+    <script src="apt-data.js" defer></script>
+    <script src="apt-filter.js" defer></script>
+    <script src="main.js" defer></script>
+  </head>
 
-<body>
-
+  <body>
     <div id="search">
-        <input type="text" placeholder="Address" id="addr-input">
-        <input type="number" class="min price" placeholder="Min. Price" id="min-p-input">
-        <input type="number" class="max price" placeholder="Max Price" id="max-p-input">
-        <input type="number" class="min room" placeholder="Min. Rooms" id="min-r-input">
-        <input type="number" class="max room" placeholder="Max Rooms" id="max-r-input">
+      <input type="text" placeholder="Address" id="addr-input" />
+      <input
+        type="number"
+        class="min price"
+        placeholder="Min. Price"
+        id="min-p-input"
+      />
+      <input
+        type="number"
+        class="max price"
+        placeholder="Max Price"
+        id="max-p-input"
+      />
+      <input
+        type="number"
+        class="min room"
+        placeholder="Min. Rooms"
+        id="min-r-input"
+      />
+      <input
+        type="number"
+        class="max room"
+        placeholder="Max Rooms"
+        id="max-r-input"
+      />
 
-        <div class="check-group">
-            <input class="form-radio" type="checkbox" name="immediate" id="immed-y">
-            <label for="immediate">Immediate</label>
-        </div>
-        <div class="check-group">
-            <input class="form-radio" type="checkbox" name="parking" id="park-y">
-            <label for="parking">Parking</label>
-        </div>
+      <div class="check-group">
+        <input
+          class="form-radio"
+          type="checkbox"
+          name="immediate"
+          id="immed-y"
+        />
+        <label for="immediate">Immediate</label>
+      </div>
+      <div class="check-group">
+        <input class="form-radio" type="checkbox" name="parking" id="park-y" />
+        <label for="parking">Parking</label>
+      </div>
 
-        <button>Find Apartments</button>
+      <button>Find Apartments</button>
     </div>
 
-    <hr>
+    <hr />
 
     <div id="results"></div>
+    <script type="text/x-handlebars-template" id="apartment-template">
+      {{#each apartments}}
+        <article class="result">
+          <img src="{{img}}" alt="apartment image" />
 
-    <!-- Your Code Here -->
-    <!-- You should start doing handlebar stuff here -->
-    <!-- Your Code Here -->
+          <span class="label l-addr">Address: </span>
+          <span class="address">{{address}}</span>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
-    <script src="apt-data.js"></script>
-    <script src="apt-filter.js"></script>
-    <script src="main.js"></script>
-</body>
+          <span class="label l-price">Price: </span>
+          <span class="price">$ {{price}}</span>
 
+          <span class="label l-rooms">Rooms: </span>
+          <span class="rooms">{{rooms}}</span>
+
+          <span class="label l-park">Park: </span>
+          <span class="parking">
+            {{#if parking}}
+              <i class="fa-solid fa-square-parking fa-xl"></i>
+            {{else}}
+              NO
+            {{/if}}
+          </span>
+
+          <span class="label l-immediate">Contact Details: </span>
+          <span class="immediate">
+            {{#if immediate}}
+              {{contactDetails.name}}
+              -
+              {{contactDetails.email}}
+            {{/if}}
+          </span>
+          <span class="label l-features">Features: </span>
+          <div class="features">
+            {{#each features}}
+              <span> {{this}} ,</span>
+            {{/each}}
+          </div>
+        </article>
+      {{else}}
+        <h1 class="no-match">No matching results</h1>
+      {{/each}}
+    </script>
+  </body>
 </html>
